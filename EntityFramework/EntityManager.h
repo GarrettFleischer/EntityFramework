@@ -9,7 +9,6 @@ using std::map;
 using std::list;
 
 #include "Component.h"
-//class Component;
 
 namespace EntitySystem
 {
@@ -30,8 +29,13 @@ namespace EntitySystem
 
 		list<EID> GetAllEntitiesWithComponents(list<ComponentType> types);
 
+		// if using Component::getUniqueType() 
 		template<typename T>
 		T * GetComponent(EID entity);
+
+		// if using custom types
+		template<typename T>
+		T * GetComponent(EID entity, ComponentType type);
 
 		void Update();
 
@@ -56,5 +60,22 @@ namespace EntitySystem
 
 		throw std::runtime_error("Error!\nCannot access component.\nEntity does not contain a component of the given type.");
 	}
+
+
+	template<typename T>
+	T * EntitySystem::EntityManager::GetComponent(EID entity, ComponentType type)
+	{
+		if (m_entities.count(entity) == 0)
+			throw std::runtime_error("Error!\nEntity with EID does not exist!");
+
+		for (Component * component : m_entities[entity])
+		{
+			if (component->type() == type)
+				return dynamic_cast<T *>(component);
+		}
+
+		throw std::runtime_error("Error!\nCannot access component.\nEntity does not contain a component of the given type.");
+	}
+
 
 }

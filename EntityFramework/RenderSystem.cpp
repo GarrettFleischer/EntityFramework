@@ -29,6 +29,7 @@ void RenderSystem::Update()
 {
 	for (EID entity : entities())
 	{
+		// get graphics and position components from the EntityManager
 		GraphicsComponent * gfx = manager()->GetComponent<GraphicsComponent>(entity);
 		PositionComponent * pos = manager()->GetComponent<PositionComponent>(entity);
 
