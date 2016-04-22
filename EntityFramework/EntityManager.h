@@ -33,11 +33,13 @@ namespace EntitySystem
 		template<typename T>
 		T * GetComponent(EID entity, ComponentType type);
 
+		void Update();
+
 	private:
 		EID GenerateUniqueEID();
-		bool Contains(const list<EID> &lst, EID entity);
 
 		map<EID, list<Component *>> m_entities;
+		bool m_changed;
 	};
 
 	template<typename T>

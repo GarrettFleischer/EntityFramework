@@ -15,6 +15,7 @@ int main()
 	list<EID> renderable = manager.GetAllEntitiesWithComponents({ GraphicsComponent::type() });
 
 	PlayerComponent *pc = manager.GetComponent<PlayerComponent>(player, PlayerComponent::type());
+	GraphicsComponent *rc = manager.GetComponent<GraphicsComponent>(other, GraphicsComponent::type());
 
 	return 0;
 }

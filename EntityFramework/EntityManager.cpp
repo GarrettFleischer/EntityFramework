@@ -8,6 +8,7 @@ namespace EntitySystem
 {
 
 	EntityManager::EntityManager()
+		: m_changed(false)
 	{}
 
 
@@ -27,7 +28,7 @@ namespace EntitySystem
 		EID entity = GenerateUniqueEID();
 		m_entities[entity] = list<Component *>();
 
-		Notify();
+		m_changed = true;
 
 		return entity;
 	}
@@ -37,7 +38,7 @@ namespace EntitySystem
 		EID entity = GenerateUniqueEID();
 		m_entities[entity] = components;
 
-		Notify();
+		m_changed = true;
 
 		return entity;
 	}
@@ -53,7 +54,7 @@ namespace EntitySystem
 
 		m_entities.erase(entity);
 
-		Notify();
+		m_changed = true;
 	}
 
 	void EntityManager::AddComponent(EID entity, Component *component)
@@ -69,7 +70,7 @@ namespace EntitySystem
 
 		m_entities[entity].push_back(component);
 
-		Notify();
+		m_changed = true;
 	}
 
 	bool EntityManager::RemoveComponent(EID entity, ComponentType type)
@@ -82,7 +83,7 @@ namespace EntitySystem
 			if (component->type() == type)
 			{
 				m_entities[entity].remove(component);
-				Notify();
+				m_changed = true;
 				return true;
 			}
 		}
@@ -93,26 +94,25 @@ namespace EntitySystem
 	list<EntitySystem::EID> EntityManager::GetAllEntitiesWithComponents(list<ComponentType> types)
 	{
 		list<EID> found_entities;
+		bool found = false;
 
-		// loop through given types
-		for (ComponentType type : types)
+		// loop through all entities
+		for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 		{
-			// loop through all entities
-			for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+			// loop through components for current entity
+			for (Component * component : it->second)
 			{
-				// if this entity hasn't already been added
-				if (!Contains(found_entities, it->first))
+				// loop through given types
+				for (ComponentType type : types)
 				{
-					// loop through components for current entity
-					for (Component * component : it->second)
+					if (component->type() == type)
 					{
-						if (component->type() == type)
-						{
-							found_entities.push_back(it->first);
-							break;
-						}
+						found_entities.push_back(it->first);
+						found = true;
+						break;
 					}
 				}
+				if (found) break;
 			}
 		}
 
@@ -120,6 +120,12 @@ namespace EntitySystem
 	}
 
 
+
+	void EntityManager::Update()
+	{
+		if (m_changed)
+			Notify();
+	}
 
 	EntitySystem::EID EntityManager::GenerateUniqueEID()
 	{
@@ -130,10 +136,4 @@ namespace EntitySystem
 
 		return eid;
 	}
-
-	bool EntityManager::Contains(const list<EID> &lst, EID entity)
-	{
-		return (find(lst.begin(), lst.end(), entity) != lst.end());
-	}
-
 }
