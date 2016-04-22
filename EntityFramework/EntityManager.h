@@ -59,7 +59,7 @@ namespace EntitySystem
 		void DestroyEntity(EID entity);
 
 		void AddComponent(EID entity, Component *component);
-		bool RemoveComponent(EID entity, ComponentType type);
+		void RemoveComponent(EID entity, ComponentType type);
 
 		list<EID> GetAllEntitiesWithComponents(list<ComponentType> types);
 
@@ -86,13 +86,10 @@ namespace EntitySystem
 		if (m_entities.count(entity) == 0)
 			throw std::runtime_error("Error!\nEntity with EID does not exist!");
 
-		for (Component * component : m_entities[entity])
-		{
-			if (component->type() == T::type())
-				return dynamic_cast<T *>(component);
-		}
+		if (m_entities[entity].count(T::type()) == 0)
+			throw std::runtime_error("Error!\nCannot access component!\nEntity does not contain a component of the given type.");
 
-		throw std::runtime_error("Error!\nCannot access component!\nEntity does not contain a component of the given type.");
+		return dynamic_cast<T *>(m_entities[entity][T::type()]);
 	}
 
 
@@ -102,13 +99,10 @@ namespace EntitySystem
 		if (m_entities.count(entity) == 0)
 			throw std::runtime_error("Error!\nEntity with EID does not exist!");
 
-		for (Component * component : m_entities[entity])
-		{
-			if (component->type() == type)
-				return dynamic_cast<T *>(component);
-		}
+		if(m_entities[entity].count(type) == 0)
+			throw std::runtime_error("Error!\nCannot access component!\nEntity does not contain a component of the given type.");
 
-		throw std::runtime_error("Error!\nCannot access component!\nEntity does not contain a component of the given type.");
+		return dynamic_cast<T *>(m_entities[entity][type]);
 	}
 
 
