@@ -35,7 +35,7 @@ int main()
 	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(1, 15) });
 	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(12, 10) });
 
-	// Update the manager and systems (infinite loop breaks memory leak checker)
+	// Update the manager and systems (press "Esc" to break out of loop)
 	while (running)
 	{
 		Keyboard::Update();
