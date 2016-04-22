@@ -27,14 +27,12 @@ int main()
 	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(1, 15) });
 	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(12, 10) });
 
-	// Update the manager and systems
-	//while (true)
-	//{
+	// Update the manager and systems (infinite loop breaks memory leak checker)
+	while (true)
+	{
 		manager.Update();
 		sys_render.Update();
-	//}
-
-
+	}
 
 	return 0;
 }
