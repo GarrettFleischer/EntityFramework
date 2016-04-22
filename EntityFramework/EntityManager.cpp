@@ -16,8 +16,8 @@ namespace EntitySystem
 	{
 		for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 		{
-			for (Component * component : it->second)
-				delete component;
+			for (auto jt = it->second.begin(); jt != it->second.end(); ++jt )
+				delete jt->second;
 			it->second.clear();
 		}
 		m_entities.clear();
@@ -26,7 +26,7 @@ namespace EntitySystem
 	EID EntityManager::CreateEntity()
 	{
 		EID entity = GenerateUniqueEID();
-		m_entities[entity] = list<Component *>();
+		m_entities[entity] = map<ComponentType, Component *>();
 
 		m_changed = true;
 
@@ -36,7 +36,10 @@ namespace EntitySystem
 	EID EntityManager::CreateEntity(list<Component *> components)
 	{
 		EID entity = GenerateUniqueEID();
-		m_entities[entity] = components;
+		m_entities[entity] = map<ComponentType, Component *>(); // add entity to map
+
+		for (Component * component : components) // ensure no duplicate component types
+			AddComponent(entity, component);
 
 		m_changed = true;
 
@@ -48,8 +51,8 @@ namespace EntitySystem
 		if (m_entities.count(entity) == 0)
 			throw std::runtime_error("Error!\nEntity with EID does not exist!");
 
-		for (Component * component : m_entities[entity])
-			delete component;
+		for (auto it = m_entities[entity].begin(); it != m_entities[entity].end(); ++it)
+			delete it->second;
 		m_entities[entity].clear();
 
 		m_entities.erase(entity);
@@ -62,33 +65,25 @@ namespace EntitySystem
 		if (m_entities.count(entity) == 0)
 			throw std::runtime_error("Error!\nEntity with EID does not exist!");
 
-		for (Component * c : m_entities[entity])
-		{
-			if (c->type() == component->type())
-				throw std::runtime_error("Error!\nCannot add component to entity.\nDuplicate types.");
-		}
+		if(m_entities[entity].count(component->type()) == 1)
+			throw std::runtime_error("Error!\nCannot add component to entity!\nDuplicate types.");
 
-		m_entities[entity].push_back(component);
+		m_entities[entity][component->type()] = component;
 
 		m_changed = true;
 	}
 
-	bool EntityManager::RemoveComponent(EID entity, ComponentType type)
+	void EntityManager::RemoveComponent(EID entity, ComponentType type)
 	{
 		if (m_entities.count(entity) == 0)
 			throw std::runtime_error("Error!\nEntity with EID does not exist!");
 
-		for (Component * component : m_entities[entity])
-		{
-			if (component->type() == type)
-			{
-				m_entities[entity].remove(component);
-				m_changed = true;
-				return true;
-			}
-		}
+		if (m_entities[entity].count(type) == 0)
+			throw std::runtime_error("Error!\nCannot remove component from entity!\nEntity does not contain a component of the given type.");
 
-		return false;
+		m_entities[entity].erase(type);
+
+		m_changed = true;
 	}
 
 	list<EntitySystem::EID> EntityManager::GetAllEntitiesWithComponents(list<ComponentType> types)
@@ -98,19 +93,20 @@ namespace EntitySystem
 		// loop through all entities
 		for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 		{
-			int found_components = 0;
-			// loop through components for current entity
-			for (Component * component : it->second)
+			bool found = true;
+
+			// loop through given components
+			for (ComponentType type : types)
 			{
-				// loop through given types
-				for (ComponentType type : types)
+				// if it doesn't contain the component...
+				if (it->second.count(type) == 0)
 				{
-					if (component->type() == type)
-						++found_components;
+					found = false;
+					break;
 				}
 			}
 
-			if (types.size() == found_components)
+			if (found)
 				found_entities.push_back(it->first);
 		}
 

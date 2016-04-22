@@ -1,5 +1,20 @@
 #pragma once
 
+/****************************************************************************
+*	class Component
+*
+*	Component(ComponentType)
+*		initializes this Component with the given type
+*		type should be static for all instances of the subclass
+*
+*	type() : ComponentType
+*		returns the static type of this subclass of Component
+*
+*	getUniqueType() : ComponentType static
+*		Call once at static initialization time for each subclass
+*		to receive a unique type. (see example components)
+****************************************************************************/
+
 namespace EntitySystem
 {
 	typedef unsigned int ComponentType;
