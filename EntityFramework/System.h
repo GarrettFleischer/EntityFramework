@@ -24,6 +24,7 @@ namespace EntitySystem
 		virtual void ModelUpdated() override;
 
 		const list<EID> & entities() const { return m_entities; }
+		EntityManager * manager() { return dynamic_cast<EntityManager *>(model()); }
 
 	private:
 		list<EID> m_entities;

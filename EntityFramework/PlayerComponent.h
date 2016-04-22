@@ -11,9 +11,11 @@ public:
 
 	virtual ~PlayerComponent();
 
+	// Should be implemented in all derived Component classes
 	static const ComponentType type() { return unique_type; }
 
 private:
+	// Should be implemented in all derived Component classes
 	static const ComponentType unique_type;
 };
 

@@ -54,12 +54,12 @@ void View::setModel(Model * model)
 	this->ModelUpdated();
 }
 
-Model * View::getModel()
+Model * View::model()
 {
 	return m_model;
 }
 
-const Model * View::getModel() const
+const Model * View::model() const
 {
 	return m_model;
 }

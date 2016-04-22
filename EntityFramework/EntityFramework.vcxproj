@@ -144,6 +144,9 @@
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="PositionComponent.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="SystemManager.cpp" />
     <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -154,6 +157,9 @@
   <ItemGroup>
     <ClInclude Include="Component.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="SystemManager.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="GraphicsComponent.h" />

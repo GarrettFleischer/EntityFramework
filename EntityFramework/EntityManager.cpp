@@ -94,11 +94,11 @@ namespace EntitySystem
 	list<EntitySystem::EID> EntityManager::GetAllEntitiesWithComponents(list<ComponentType> types)
 	{
 		list<EID> found_entities;
-		bool found = false;
 
 		// loop through all entities
 		for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 		{
+			int found_components = 0;
 			// loop through components for current entity
 			for (Component * component : it->second)
 			{
@@ -106,14 +106,12 @@ namespace EntitySystem
 				for (ComponentType type : types)
 				{
 					if (component->type() == type)
-					{
-						found_entities.push_back(it->first);
-						found = true;
-						break;
-					}
+						++found_components;
 				}
-				if (found) break;
 			}
+
+			if (types.size() == found_components)
+				found_entities.push_back(it->first);
 		}
 
 		return found_entities;
@@ -123,8 +121,12 @@ namespace EntitySystem
 
 	void EntityManager::Update()
 	{
+		// Let any watching Systems know that the entities have changed
 		if (m_changed)
+		{
+			m_changed = false;
 			Notify();
+		}
 	}
 
 	EntitySystem::EID EntityManager::GenerateUniqueEID()

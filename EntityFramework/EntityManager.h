@@ -31,7 +31,7 @@ namespace EntitySystem
 		list<EID> GetAllEntitiesWithComponents(list<ComponentType> types);
 
 		template<typename T>
-		T * GetComponent(EID entity, ComponentType type);
+		T * GetComponent(EID entity);
 
 		void Update();
 
@@ -43,14 +43,14 @@ namespace EntitySystem
 	};
 
 	template<typename T>
-	T * EntitySystem::EntityManager::GetComponent(EID entity, ComponentType type)
+	T * EntitySystem::EntityManager::GetComponent(EID entity)
 	{
 		if (m_entities.count(entity) == 0)
 			throw std::runtime_error("Error!\nEntity with EID does not exist!");
 
 		for (Component * component : m_entities[entity])
 		{
-			if (component->type() == type)
+			if (component->type() == T::type())
 				return dynamic_cast<T *>(component);
 		}
 

@@ -9,13 +9,12 @@ namespace EntitySystem
 
 	System::~System()
 	{
-		getModel()->Remove(*this);
+		model()->Remove(*this);
 	}
 
 	void System::ModelUpdated()
 	{
-		EntityManager *manager = dynamic_cast<EntityManager *>(getModel());
-		m_entities = manager->GetAllEntitiesWithComponents(m_types);
+		m_entities = manager()->GetAllEntitiesWithComponents(m_types);
 	}
 
 }

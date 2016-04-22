@@ -29,8 +29,8 @@ class View
 
 public:
 	void setModel(Model * model);
-	Model * getModel();
-	const Model * getModel() const;
+	Model * model();
+	const Model * model() const;
 
 protected:
 	View(Model * model = nullptr);

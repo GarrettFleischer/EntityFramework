@@ -1,28 +1,26 @@
 #pragma once
+
 #include "Component.h"
 
 using namespace EntitySystem;
 
-class GraphicsComponent : public Component
+class PositionComponent : public Component
 {
 public:
-	typedef unsigned short COLOR;
-
-	GraphicsComponent(char graphic = '@', COLOR color = 7);
-
-	virtual ~GraphicsComponent();
+	PositionComponent(short x = 0, short y = 0);
+	virtual ~PositionComponent();
 
 	// Should be implemented in all derived Component classes
 	static const ComponentType type() { return unique_type; }
 
-	const char graphic() const { return m_graphic; }
-	const COLOR color() const { return m_color; }
+	const short x() const { return m_x; }
+	const short y() const { return m_y; }
 
 private:
 	// Should be implemented in all derived Component classes
 	static const ComponentType unique_type;
 
-	char m_graphic;
-	COLOR m_color;
+	short m_x;
+	short m_y;
 };
 
