@@ -14,7 +14,7 @@ namespace EntitySystem
 	class System : public View
 	{
 	public:
-		System(EntityManager *manager, list<ComponentType> types);
+		System(EntityManager *manager = nullptr, list<ComponentType> types = {});
 
 		virtual ~System();
 

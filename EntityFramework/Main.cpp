@@ -4,10 +4,16 @@
 #endif // _DEBUG
 
 #include "EntityManager.h"
+#include "SystemManager.h"
+
 #include "RenderSystem.h"
+#include "InputSystem.h"
+
 #include "GraphicsComponent.h"
 #include "PositionComponent.h"
 #include "PlayerComponent.h"
+
+#include "Keyboard.h"
 
 using namespace EntitySystem;
 
@@ -15,8 +21,10 @@ int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
+	bool running = true;
+
 	EntityManager manager;
-	RenderSystem sys_render(&manager);
+	SystemManager systems({ new RenderSystem(&manager), new InputSystem(running) });
 
 	// player
 	manager.CreateEntity({ new PlayerComponent(), new PositionComponent(7, 8), new GraphicsComponent() });
@@ -28,10 +36,12 @@ int main()
 	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(12, 10) });
 
 	// Update the manager and systems (infinite loop breaks memory leak checker)
-	while (true)
+	while (running)
 	{
+		Keyboard::Update();
+
 		manager.Update();
-		sys_render.Update();
+		systems.Update();
 	}
 
 	return 0;

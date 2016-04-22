@@ -144,6 +144,8 @@
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="SystemManager.cpp" />
@@ -157,6 +159,8 @@
   <ItemGroup>
     <ClInclude Include="Component.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="SystemManager.h" />
