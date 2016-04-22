@@ -6,7 +6,6 @@
 *************************************************************************/
 #include "Model.h"
 #include "View.h"
-#include "ListIterator.h"
 
 Model::Model()
 {}
@@ -28,17 +27,17 @@ Model & Model::operator=(const Model & rhs)
 
 void Model::Register(View & view)
 {
-	try	{ m_views.Extract(&view); }	catch(const Exception &) {}
-	m_views.Append(&view);
+	m_views.remove(&view); // ensure the same view isn't registered twice...
+	m_views.push_back(&view);
 }
 
 void Model::Remove(View & view)
 {
-	try { m_views.Extract(&view); }	catch (const Exception &) {}
+	m_views.remove(&view);
 }
 
 void Model::Notify()
 {
-	for (ListIterator<View *> iter(&m_views); !iter.IsDone(); iter.MoveNext())
-		iter.GetCurrent()->ModelUpdated();
+	for (auto it = m_views.begin(); it != m_views.end(); ++it)
+		(*it)->ModelUpdated();
 }

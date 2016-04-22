@@ -3,13 +3,12 @@
 
 using namespace EntitySystem;
 
-class PlayerComponent : public Component
+class GraphicsComponent : public Component
 {
 public:
+	GraphicsComponent();
 
-	PlayerComponent();
-
-	virtual ~PlayerComponent();
+	virtual ~GraphicsComponent();
 
 	static const ComponentType type() { return unique_type; }
 

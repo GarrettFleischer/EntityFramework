@@ -7,10 +7,10 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include "DoubleLinkedList.h"
+#include <list>
+using std::list;
 
 class View;
-
 
 /************************************************************************
 * Class: Model
@@ -44,7 +44,7 @@ protected:
 	void Notify();
 
 private:
-	DoubleLinkedList<View *> m_views;
+	list<View *> m_views;
 };
 
 #endif // MODEL_H

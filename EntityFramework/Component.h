@@ -20,6 +20,5 @@ namespace EntitySystem
 		ComponentType m_type;
 		static ComponentType m_unique;
 	};
-	ComponentType Component::m_unique = 0; // initialize m_unique
 }
 

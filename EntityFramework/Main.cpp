@@ -1,27 +1,20 @@
-#include "RenderComponent.h"
+#include "EntityManager.h"
+#include "GraphicsComponent.h"
 #include "PlayerComponent.h"
 
 using namespace EntitySystem;
 
 int main()
 {
-	RenderComponent a;
-	PlayerComponent b;
+	EntityManager manager;
+	
+	EID player = manager.CreateEntity({ new PlayerComponent(), new GraphicsComponent() });
+	EID other = manager.CreateEntity({ new GraphicsComponent() });
 
-	if (a.type() == RenderComponent::type())
-	{
-		RenderComponent d;
-	}
+	list<EID> players = manager.GetAllEntitiesWithComponents({ PlayerComponent::type() });
+	list<EID> renderable = manager.GetAllEntitiesWithComponents({ GraphicsComponent::type() });
 
-	if (b.type() == PlayerComponent::type())
-	{
-		RenderComponent d;
-	}
-
-	if (PlayerComponent::type() == RenderComponent::type())
-	{
-		RenderComponent d;
-	}
+	PlayerComponent *pc = manager.GetComponent<PlayerComponent>(player, PlayerComponent::type());
 
 	return 0;
 }
