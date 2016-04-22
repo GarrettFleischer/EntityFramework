@@ -1,3 +1,4 @@
+// Let the debug log show file and line numbers of the "new" causing memory leaks.
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
 #define new new( _CLIENT_BLOCK, __FILE__, __LINE__)
