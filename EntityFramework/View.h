@@ -28,9 +28,9 @@ class View
 	friend class Model; // to access ModelUpdated()
 
 public:
-	void SetModel(Model * model);
-	Model * GetModel();
-	const Model * GetModel() const;
+	void setModel(Model * model);
+	Model * getModel();
+	const Model * getModel() const;
 
 protected:
 	View(Model * model = nullptr);

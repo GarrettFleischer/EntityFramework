@@ -42,7 +42,7 @@ View & View::operator=(const View & rhs)
 	return *this;
 }
 
-void View::SetModel(Model * model)
+void View::setModel(Model * model)
 {
 	if(m_model)
 		m_model->Remove(*this);
@@ -54,12 +54,12 @@ void View::SetModel(Model * model)
 	this->ModelUpdated();
 }
 
-Model * View::GetModel()
+Model * View::getModel()
 {
 	return m_model;
 }
 
-const Model * View::GetModel() const
+const Model * View::getModel() const
 {
 	return m_model;
 }
