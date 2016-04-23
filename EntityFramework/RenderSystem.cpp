@@ -1,6 +1,7 @@
 #include "RenderSystem.h"
 
 #include <Windows.h>
+#include <cmath>
 
 #include "GraphicsComponent.h"
 #include "PositionComponent.h"
@@ -13,12 +14,12 @@ RenderSystem::RenderSystem(EntityManager *manager)
 	: System(manager, { GraphicsComponent::type(), PositionComponent::type() })
 {
 	// hide the blinking cursor...
-	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO     cursorInfo;
 
-	GetConsoleCursorInfo(handle, &cursorInfo);
+	GetConsoleCursorInfo(out, &cursorInfo);
 	cursorInfo.bVisible = false;
-	SetConsoleCursorInfo(handle, &cursorInfo);
+	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
 
@@ -33,17 +34,21 @@ void RenderSystem::Update()
 		GraphicsComponent * gfx = manager()->GetComponent<GraphicsComponent>(entity);
 		PositionComponent * pos = manager()->GetComponent<PositionComponent>(entity);
 
-		HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+		HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
+		SetConsoleTextAttribute(out, 7);
+		SetConsoleCursorPosition(out, { (SHORT)floor(pos->prev_x()), (SHORT)floor(pos->prev_y()) });
+		cout << '\0';
 
 		// set position and color
-		SetConsoleCursorPosition(handle, { pos->x(), pos->y() });
-		SetConsoleTextAttribute(handle, gfx->color());
+		SetConsoleCursorPosition(out, { (SHORT)floor(pos->x()), (SHORT)floor(pos->y()) });
+		SetConsoleTextAttribute(out, gfx->color());
 
 		// draw graphic
 		cout << gfx->graphic();
 
 		// reset color to black and white...
-		SetConsoleTextAttribute(handle, 7);
+		SetConsoleTextAttribute(out, 7);
 	}
 }
 

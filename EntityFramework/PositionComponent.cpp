@@ -4,7 +4,8 @@
 const ComponentType PositionComponent::unique_type = Component::getUniqueType();
 
 
-PositionComponent::PositionComponent(short x, short y)
+
+PositionComponent::PositionComponent(float x, float y)
 	: Component(unique_type), m_x(x), m_y(y)
 {}
 

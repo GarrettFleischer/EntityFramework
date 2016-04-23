@@ -9,10 +9,13 @@
 
 #include "RenderSystem.h"
 #include "InputSystem.h"
+#include "ControlSystem.h"
+#include "PhysicsSystem.h"
 
 #include "GraphicsComponent.h"
 #include "PositionComponent.h"
 #include "PlayerComponent.h"
+#include "PhysicsComponent.h"
 
 #include "Keyboard.h"
 
@@ -25,16 +28,16 @@ int main()
 	bool running = true;
 
 	EntityManager manager;
-	SystemManager systems({ new RenderSystem(&manager), new InputSystem(running) });
+	SystemManager systems({ new RenderSystem(&manager), new InputSystem(running), new ControlSystem(&manager), new PhysicsSystem(&manager) });
 
 	// player
-	manager.CreateEntity({ new PlayerComponent(), new PositionComponent(7, 8), new GraphicsComponent() });
+	manager.CreateEntity({ new PlayerComponent(), new PositionComponent(7, 8), new PhysicsComponent({0,0,1,1}, true),  new GraphicsComponent() });
 
 	// bushes
-	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(3, 3) });
-	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(4, 8) });
-	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(1, 15) });
-	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(12, 10) });
+	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(3, 3), new PhysicsComponent({ 0,0,1,1 }, true) });
+	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(4, 8), new PhysicsComponent({ 0,0,1,1 }, true) });
+	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(1, 15), new PhysicsComponent({ 0,0,1,1 }, true) });
+	manager.CreateEntity({ new GraphicsComponent('*', 2), new PositionComponent(12, 10), new PhysicsComponent({ 0,0,1,1 }, true) });
 
 	// Update the manager and systems (press "Esc" to break out of loop)
 	while (running)

@@ -15,8 +15,12 @@ public:
 	// Should be implemented in all derived Component classes
 	static const ComponentType type() { return unique_type; }
 
-	const char graphic() const { return m_graphic; }
-	const COLOR color() const { return m_color; }
+
+	char graphic() const { return m_graphic; }
+	void graphic(char graphic) { m_graphic = graphic; }
+
+	COLOR color() const { return m_color; }
+	void color(COLOR color) { m_color = color; }
 
 private:
 	// Should be implemented in all derived Component classes
