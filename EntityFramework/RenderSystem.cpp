@@ -1,7 +1,6 @@
 #include "RenderSystem.h"
 
 #include <Windows.h>
-#include <cmath>
 
 #include "GraphicsComponent.h"
 #include "PositionComponent.h"
@@ -37,11 +36,11 @@ void RenderSystem::Update()
 		HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
 
 		SetConsoleTextAttribute(out, 7);
-		SetConsoleCursorPosition(out, { (SHORT)floor(pos->prev_x()), (SHORT)floor(pos->prev_y()) });
+		SetConsoleCursorPosition(out, { (SHORT)pos->prev_x(), (SHORT)pos->prev_y() });
 		cout << '\0';
 
 		// set position and color
-		SetConsoleCursorPosition(out, { (SHORT)floor(pos->x()), (SHORT)floor(pos->y()) });
+		SetConsoleCursorPosition(out, { (SHORT)pos->x(), (SHORT)pos->y() });
 		SetConsoleTextAttribute(out, gfx->color());
 
 		// draw graphic
