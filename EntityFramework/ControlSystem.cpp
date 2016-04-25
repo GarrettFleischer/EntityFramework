@@ -29,7 +29,7 @@ void ControlSystem::Update()
 		}
 		else
 		{
-			const float spd = 0.01f;
+			const float spd = 0.1f;
 
 			if (Keyboard::KeyDown(VK_RIGHT))
 			{

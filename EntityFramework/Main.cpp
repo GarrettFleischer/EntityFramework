@@ -21,6 +21,10 @@
 
 #include "Keyboard.h"
 
+const float FRAMES = 60;
+const float SECOND = std::milli::den;
+const float FPS = (SECOND / FRAMES);
+
 using namespace EntitySystem;
 
 int main()
@@ -44,11 +48,15 @@ int main()
 	// Update the manager and systems (press "Esc" to break out of loop)
 	while (running)
 	{
-		Keyboard::Update();
+		if (CDeltaTime() > FPS)
+		{
+			Keyboard::Update();
 
-		manager.Update();
-		systems.Update();
-		Console::Update();
+			manager.Update();
+			systems.Update();
+
+			CUpdate();
+		}
 	}
 
 	return 0;

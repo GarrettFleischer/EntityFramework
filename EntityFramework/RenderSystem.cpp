@@ -29,7 +29,8 @@ RenderSystem::~RenderSystem()
 
 void RenderSystem::Update()
 {
-	Console::Clear();
+	CClear();
+
 	for (EID entity : entities())
 	{
 		// get graphics and position components from the EntityManager
@@ -38,7 +39,7 @@ void RenderSystem::Update()
 
 		HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
 
-		Console::Write(pos->x(), pos->y(), gfx->graphic(), gfx->color());
+		CWrite(pos->x(), pos->y(), gfx->graphic(), gfx->color());
 	}
 }
 
