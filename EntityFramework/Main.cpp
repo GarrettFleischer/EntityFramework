@@ -17,6 +17,8 @@
 #include "PlayerComponent.h"
 #include "PhysicsComponent.h"
 
+#include "Console.h"
+
 #include "Keyboard.h"
 
 using namespace EntitySystem;
@@ -46,6 +48,7 @@ int main()
 
 		manager.Update();
 		systems.Update();
+		Console::Update();
 	}
 
 	return 0;

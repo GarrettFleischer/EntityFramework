@@ -5,6 +5,8 @@
 #include "GraphicsComponent.h"
 #include "PositionComponent.h"
 
+#include "Console.h"
+
 #include <iostream>
 using std::cout;
 
@@ -27,6 +29,7 @@ RenderSystem::~RenderSystem()
 
 void RenderSystem::Update()
 {
+	Console::Clear();
 	for (EID entity : entities())
 	{
 		// get graphics and position components from the EntityManager
@@ -35,19 +38,7 @@ void RenderSystem::Update()
 
 		HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
 
-		SetConsoleTextAttribute(out, 7);
-		SetConsoleCursorPosition(out, { (SHORT)pos->prev_x(), (SHORT)pos->prev_y() });
-		cout << '\0';
-
-		// set position and color
-		SetConsoleCursorPosition(out, { (SHORT)pos->x(), (SHORT)pos->y() });
-		SetConsoleTextAttribute(out, gfx->color());
-
-		// draw graphic
-		cout << gfx->graphic();
-
-		// reset color to black and white...
-		SetConsoleTextAttribute(out, 7);
+		Console::Write(pos->x(), pos->y(), gfx->graphic(), gfx->color());
 	}
 }
 

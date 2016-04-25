@@ -37,10 +37,10 @@
     <Filter Include="Source Files\Systems">
       <UniqueIdentifier>{82d8df61-a5eb-4683-a487-6065da1637e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Input">
+    <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{7dada037-5d99-4378-94ca-35d2fe9635d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Input">
+    <Filter Include="Header Files\Utils">
       <UniqueIdentifier>{ecebb24b-7e8c-4f57-b9ce-4f0e08f0b6da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -79,7 +79,7 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Keyboard.cpp">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
     <ClCompile Include="InputSystem.cpp">
       <Filter>Source Files\Systems</Filter>
@@ -92,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp">
       <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,7 +129,7 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Keyboard.h">
-      <Filter>Header Files\Input</Filter>
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="InputSystem.h">
       <Filter>Header Files\Systems</Filter>
@@ -139,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsSystem.h">
       <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
